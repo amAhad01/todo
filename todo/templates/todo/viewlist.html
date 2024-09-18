@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}To-Do Lists{% endblock %}
+
+{% block ref %}
+    {% include 'todo/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<h1 class="mt-4">To-Do Lists</h1>
+
+<form method="GET" action="" class="d-flex my-3">
+    <input type="text" name="q" class="form-control me-2" placeholder="Search by name" value="{{ r.GET.q }}">
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<div class="mb-3">
+    <a href="?sort=all" class="btn btn-outline-primary btn-sm">All Lists</a>
+    <a href="?sort=created_asc" class="btn btn-outline-secondary btn-sm">Sort by Oldest</a>
+    <a href="?sort=created_desc" class="btn btn-outline-secondary btn-sm">Sort by Newest</a>
+</div>
+
+<ul class="list-group">
+    {% for todo_list in lists %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'todo_detail' todo_list.pk %}" class="text-decoration-none">{{ todo_list.title }}</a>
+        <span class="badge bg-primary text-white">Created on {{ todo_list.time }}</span>
+        <a href="{% url 'delete_todo_list' todo_list.pk %}" class="btn btn-danger btn-sm">Delete</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'add_todo_list' %}" class="btn btn-success mt-4">Add To-Do List</a><br>
+<img src="{% static 'images/list.png' %}" alt="todo" style="margin-left: auto; margin-right: auto; display: block;">
+{% endblock %}

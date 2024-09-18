@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}List's Details{% endblock %}
+
+{% block ref %}
+    {% include 'todo/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<h1 class="mt-4">{{ todo_list.title }}</h1>
+
+<p>Progress: <span class="badge bg-info">{{ progress }}%</span></p>
+
+<div class="mb-3">
+    <a href="?status=all" class="btn btn-outline-primary btn-sm">Delete Filter</a>
+    <a href="?status=completed" class="btn btn-outline-secondary btn-sm">Completed Tasks</a>
+    <a href="?status=pending" class="btn btn-outline-secondary btn-sm">Pending Tasks</a>
+    <a href="?sort=due" class="btn btn-outline-secondary btn-sm">Sort by Due Date</a>
+    <a href="?sort=priority" class="btn btn-outline-secondary btn-sm">Sort by Priority</a>
+</div>
+
+<div class="container mt-4">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Task Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Due Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.name }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.get_priority_display }}</td>
+                <td>{{ task.due }}</td>
+                <td>
+                    <span class="badge {% if task.completed %}badge-success{% else %}badge-warning{% endif %}">
+                        {% if task.completed %}Completed{% else %}Pending{% endif %}
+                    </span>
+                </td>
+                <td>
+                    <a href="{% url 'edit_task' todo_list.pk task.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete_task' todo_list.pk task.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{% url 'add_task' todo_list.pk %}" class="btn btn-success mt-4" style="background-color: #0d6efd;">Add Task</a>
+<a href="{% url 'todo_list' %}" class="btn btn-success mt-4">Done</a>
+{% endblock %}

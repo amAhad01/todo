@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Reset Password{% endblock %}
+
+{% block content %}
+<h2>Password Reset Confirm</h2>
+<img align="right" src="{% static 'images/changepass.png' %}" alt="changepass">
+<form method="post" action="{% url 'changepass' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Reset</button>
+    <a href="{% url 'todo_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<h2>Sign Up</h2>
+<img align="right" src="{% static 'images/signup.png' %}" alt="signup">
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+</form>
+
+<p>Already have an account? <a href="{% url 'login' %}">Log In</a></p>
+{% endblock %}

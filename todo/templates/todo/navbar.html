@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="{% url 'todo_list' %}">To-Do List</a>
+    {% if user.is_authenticated %}
+        <span class="navbar-text">Hello {{ user.username }}!</span>
+    {% endif %}
+    <div class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+            <a class="nav-item nav-link" href="{% url 'changepass' %}">Change Password</a>
+            <a class="nav-item nav-link" href="{% url 'logout' %}" method="post" style="color: #dc3545;">Logout</a>
+        {% else %}
+            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+            <a class="nav-item nav-link" href="{% url 'sign_up' %}">Sign Up</a>
+        {% endif %}
+    </div>
+</nav>  
